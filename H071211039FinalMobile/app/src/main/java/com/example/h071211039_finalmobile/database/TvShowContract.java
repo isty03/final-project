@@ -2,13 +2,13 @@ package com.example.h071211039_finalmobile.database;
 
 import android.provider.BaseColumns;
 
-public class DatabaseContract {
+public class TvShowContract {
     // Private constructor to prevent instantiation
-    private DatabaseContract() {
+    private TvShowContract() {
     }
 
-    // Movie table definition
-    public static class DatabaseEntry implements BaseColumns {
+    // TvShow table definition
+    public static class TvShowEntry implements BaseColumns {
         public static final String TABLE_NAME = "movies";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_RELEASE_DATE = "release_date";
@@ -35,4 +35,3 @@ public class DatabaseContract {
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }
-
