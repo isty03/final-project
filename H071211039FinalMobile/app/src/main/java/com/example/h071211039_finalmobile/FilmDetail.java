@@ -20,6 +20,7 @@ public class FilmDetail extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private ImageView backdropImageView, backButton, favoriteButton, posterImageView, typeImageView;
     private TextView titleTextView, releaseDateTextView, ratingTextView, synopsisTextView;
+    boolean favorite = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +52,15 @@ public class FilmDetail extends AppCompatActivity {
                     .into(backdropImageView);
             synopsisTextView.setText(movie.getOverview());
 
-            favoriteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!dbHelper.isMovieInFavorites(movie.getTitle())) {
-                        addMovieToFavorites(movie.getId(), movie.getOverview(), posterUrl, movie.getReleaseDate(), movie.getTitle(), movie.getVoteAverage(), backdropUrl);
-                    } else {
-                        deleteMovieToFavorites(movie.getTitle());
-                    }
+            favoriteButton.setOnClickListener(view -> {
+                if (!favorite) {
+                    favoriteButton.setImageResource(R.drawable.ic_favorite);
+                    favorite = true;
+                    addMovieToFavorites(movie.getId(), movie.getOverview(), posterUrl, movie.getReleaseDate(), movie.getTitle(), movie.getVoteAverage(), backdropUrl);
+                } else {
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_border);
+                    favorite = false;
+                    deleteMovieToFavorites(movie.getTitle());
                 }
             });
 
@@ -77,14 +79,15 @@ public class FilmDetail extends AppCompatActivity {
                     .into(backdropImageView);
             synopsisTextView.setText(show.getOverview());
 
-            favoriteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!dbHelper.isMovieInFavorites(show.getName())) {
-                        addMovieToFavorites(show.getId(), show.getOverview(), posterUrl, show.getName(), show.getName(), show.getVoteAverage(), backdropUrl);
-                    } else {
-                        deleteMovieToFavorites(show.getName());
-                    }
+            favoriteButton.setOnClickListener(view -> {
+                if (!favorite) {
+                    favoriteButton.setImageResource(R.drawable.ic_favorite);
+                    favorite = true;
+                    addMovieToFavorites(show.getId(), show.getOverview(), posterUrl, show.getName(), show.getName(), show.getVoteAverage(), backdropUrl);
+                } else {
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_border);
+                    favorite = false;
+                    deleteMovieToFavorites(show.getName());
                 }
             });
         }

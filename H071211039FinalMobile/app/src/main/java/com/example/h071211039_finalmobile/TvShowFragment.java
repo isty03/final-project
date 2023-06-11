@@ -3,6 +3,7 @@ package com.example.h071211039_finalmobile;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,7 +57,6 @@ public class TvShowFragment extends Fragment {
                 .build();
 
         TvShowService tvShowService = retrofit.create(TvShowService.class);
-
         Call<TvResponse> call = tvShowService.getAiringTodayTV(API_KEY);
 
         call.enqueue(new Callback<TvResponse>() {
@@ -67,9 +67,11 @@ public class TvShowFragment extends Fragment {
                     TvResponse tvResponse = response.body();
                     List<Tv> tvShow = tvResponse.getTvShows();
                     tvAdapter = new TvShowAdapter(tvShow);
-                    Toast.makeText(getActivity(), "Error: " + tvShow.get(0).getPosterUrl(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Error: " + tvShow.get(0).getPosterUrl(), Toast.LENGTH_SHORT).show();
                     recyclerView.setAdapter(tvAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    int kolom = 3;
+                    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), kolom);
+                    recyclerView.setLayoutManager(layoutManager);
                 } else {
                     showAlert();
                     Toast.makeText(getActivity(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();

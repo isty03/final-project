@@ -62,14 +62,15 @@ public class MovieFragment extends Fragment {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "YES ADA", Toast.LENGTH_SHORT).show();
                     hideLoading();
                     MovieResponse movieResponse = response.body();
                     List<Movie> movies = movieResponse.getMovies();
                     movieAdapter = new MovieAdapter(movies);
-                    Toast.makeText(getActivity(), "Error: " + movies.get(0).getPosterPath(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Error: " + movies.get(0).getPosterPath(), Toast.LENGTH_SHORT).show();
                     recyclerView.setAdapter(movieAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    int kolom = 3;
+                    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), kolom);
+                    recyclerView.setLayoutManager(layoutManager);
                 } else {
                     showAlert();
                     Toast.makeText(getActivity(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
